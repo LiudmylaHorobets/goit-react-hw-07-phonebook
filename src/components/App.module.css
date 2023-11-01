@@ -1,0 +1,15 @@
+.phonebook {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid palevioletred;
+}
+.title {
+  color: palevioletred;
+  text-align: center;
+}
+.titleNotification {
+  text-align: center;
+  font-weight: 400;
+  font-size: 16px;
+}

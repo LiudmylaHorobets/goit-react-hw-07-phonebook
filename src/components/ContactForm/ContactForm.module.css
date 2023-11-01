@@ -1,0 +1,17 @@
+.form {
+  display: grid;
+  place-items: center;
+}
+.label {
+  margin-bottom: 5px;
+}
+.buttonForm {
+  padding: 5px;
+  border: none;
+  background-color: pink;
+  cursor: pointer;
+}
+.buttonForm:hover,
+.buttonForm:focus {
+  background-color: plum;
+}
