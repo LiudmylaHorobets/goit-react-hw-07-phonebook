@@ -1,74 +1,93 @@
-// import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchContacts, filterContacts } from 'redux/contactSlice';
+import { selectFilter, selectItems } from 'redux/selectors';
 import { ContactForm } from './ContactForm/ContactForm.jsx';
 import { ContactsList } from './ContactsList/ContactsList.jsx';
 import { Filter } from './Filter/Filter.jsx';
 
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  addContacts,
-  deleteContacts,
-  filterContacts,
-} from 'redux/contactSlice.js';
-
 import css from './App.module.css';
+
+// export const App = () => {
+//   const dispatch = useDispatch();
+//   useEffect(() => {
+//     dispatch(fetchContacts());
+//   }, [dispatch]);
+
+//   const contacts = useSelector(selectItems);
+//   const filter = useSelector(selectFilter);
+
+//   const handleFilterChange = e => {
+//     const newFilter = e.target.value;
+//     dispatch(filterContacts(newFilter));
+//   };
+
+//   const getContactFromFilter = () => {
+//     if (typeof filter !== 'string') {
+//       return contacts;
+//     }
+//     const filteredContacts = contacts.filter(({ name }) =>
+//       name.toLowerCase().includes(filter.toLowerCase())
+//     );
+//     return filteredContacts;
+//   };
+
+//   return (
+//     <div className={css.phonebook}>
+//       <h1 className={css.title}>Phonebook</h1>
+//       <ContactForm />
+//       <h2 className={css.title}>Contacts</h2>
+//       {contacts.length > 0 ? (
+//         <>
+//           <Filter filter={filter} handleFilterChange={handleFilterChange} />
+//           <ContactsList contacts={getContactFromFilter()} />
+//         </>
+//       ) : (
+//         <p className={css.titleNotification}>
+//           Your phonebook is empty. Add your first contact!
+//         </p>
+//       )}
+//     </div>
+//   );
+// };
 
 export const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.contacts);
-  const filter = useSelector(state => state.contacts.filter);
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
-  const handleAddContact = userContacts => {
-    if (!userContacts.name) {
-      return;
-    }
-
-    if (
-      contacts.some(
-        contact =>
-          contact.name.toLowerCase() === userContacts.name.toLowerCase()
-      )
-    ) {
-      alert(`${userContacts.name} is already in contacts`);
-      return;
-    }
-    dispatch(addContacts(userContacts));
-  };
-
-  const handleDelete = contactId => {
-    dispatch(deleteContacts(contactId));
-  };
+  const contacts = useSelector(selectItems);
+  const filter = useSelector(selectFilter);
 
   const handleFilterChange = e => {
     const newFilter = e.target.value;
     dispatch(filterContacts(newFilter));
   };
 
-   const getContactFromFilter = () => {
+  const getContactFromFilter = () => {
     if (typeof filter !== 'string') {
       return contacts;
     }
-    const filterContacts = contacts.filter(({ name }) =>
+    const filteredContacts = contacts.filter(({ name }) =>
       name.toLowerCase().includes(filter.toLowerCase())
     );
-    return filterContacts;
+    return filteredContacts;
   };
 
   return (
     <div className={css.phonebook}>
       <h1 className={css.title}>Phonebook</h1>
-      <ContactForm handleAddContact={handleAddContact} />
+      <ContactForm />
       <h2 className={css.title}>Contacts</h2>
       {contacts.length > 0 ? (
         <>
           <Filter filter={filter} handleFilterChange={handleFilterChange} />
-          <ContactsList
-            contacts={getContactFromFilter()}
-            handleDelete={handleDelete}
-          />
+          <ContactsList contacts={getContactFromFilter()} />
         </>
       ) : (
         <p className={css.titleNotification}>
-          Your phonebook is empty. Add first contact!
+          Your phonebook is empty. Add your first contact!
         </p>
       )}
     </div>

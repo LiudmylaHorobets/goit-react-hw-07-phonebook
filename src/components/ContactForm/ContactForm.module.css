@@ -5,6 +5,11 @@
 .label {
   margin-bottom: 5px;
 }
+.labelTitle {
+  font-size: 10px;
+  margin: 0;
+  color: gray;
+}
 .buttonForm {
   padding: 5px;
   border: none;
